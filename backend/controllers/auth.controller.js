@@ -4,6 +4,16 @@ import generateTokenAndSetCookie from "../utils/generateToken.js";
 
 export const login = async (req, res) => {
   res.send("Login route");
+
+  const { userName, password } = req.body;
+
+  try {
+    if ((!userName, !password)) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
 };
 
 export const signup = async (req, res) => {
