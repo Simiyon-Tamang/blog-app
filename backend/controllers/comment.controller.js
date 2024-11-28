@@ -32,7 +32,7 @@ export const getComments = async (req, res) => {
   try {
     const { postId } = req.params;
     const commments = await Comment.find({ post: postId }) //post : postId is the query to find the comments of the post with the given postId
-      .populate("user", "fullName")
+      .populate("author", "fullName")
       .sort({ createdAt: -1 });
 
     res.status(200).json(commments);
