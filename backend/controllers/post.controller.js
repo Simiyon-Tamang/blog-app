@@ -26,6 +26,16 @@ export const createPost = async (req, res) => {
 
 export const getPosts = async (req, res) => {
   try {
+    const { postId } = req.params;
+
+    if (postId) {
+      const post = await Post.findById(postId)
+        .populate("author", "_id fullName")
+        .sort({ createdAt: -1 });
+      console.log(post);
+      return res.status(200).json(post);
+    }
+
     const posts = await Post.find()
       .populate("author", "_id fullName")
       .sort({ createdAt: -1 });
@@ -39,7 +49,7 @@ export const getPosts = async (req, res) => {
       },
       createdAt: post.createdAt,
     }));
-
+    console.log(formattedPosts);
     res.status(200).json(formattedPosts);
   } catch (error) {
     console.log("Error in getPosts controller");
