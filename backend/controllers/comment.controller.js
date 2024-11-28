@@ -18,13 +18,26 @@ export const createComment = async (req, res) => {
     const comment = new Comment({
       content,
       author,
-      postId,
+      post: postId,
     });
     await comment.save();
+    return res.status(201).json(comment);
   } catch (error) {
     console.log("Error in createComment controller");
     res.status(500).json({ message: error.message });
   }
 };
 
-export const getComments = async (req, res) => {};
+export const getComments = async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const commments = await Comment.find({ post: postId }) //post : postId is the query to find the comments of the post with the given postId
+      .populate("user", "fullName")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json(commments);
+  } catch (error) {
+    console.log("Error in getComments controller");
+    res.status(500).json({ message: error.message });
+  }
+};
