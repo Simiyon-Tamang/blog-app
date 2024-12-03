@@ -1,10 +1,12 @@
 import React from "react";
 import Image from "../image/image";
+import { Link } from "react-router-dom";
+import Home from "../../pages/home/Home";
 
 const Navbar = () => {
   return (
     <div className="navbar bg-base-100">
-      <div className="flex-1">
+      <Link to="/" className="flex-1">
         <Image
           src="logo.png"
           alt="Logo"
@@ -12,7 +14,7 @@ const Navbar = () => {
           h={100}
           className={"rounded"}
         />
-      </div>
+      </Link>
       <div className="flex-none gap-2">
         <div className="form-control">
           <input
