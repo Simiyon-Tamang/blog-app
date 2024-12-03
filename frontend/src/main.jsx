@@ -15,6 +15,7 @@ import Signup from "./pages/signup/Signup.jsx";
 import WritePage from "./pages/writepage/WritePage.jsx";
 import PostListPage from "./pages/posts/PostListPage.jsx";
 import MainLayout from "./layouts/MainLayout.jsx";
+import { AuthContextProvider } from "./context/AuthContext.jsx";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthContextProvider>
+      <RouterProvider router={router} />
+    </AuthContextProvider>
   </StrictMode>
 );

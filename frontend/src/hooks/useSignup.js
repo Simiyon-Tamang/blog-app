@@ -1,3 +1,4 @@
+import { json } from "express";
 import React from "react";
 import toast from "react-hot-toast";
 
@@ -22,6 +23,7 @@ const useSignup = () => {
       if (data.error) {
         throw new Error(data.error);
       }
+      localStorage.setItem("authUser", json.stringify(data));
     } catch (error) {
       toast.error(error.message);
     } finally {
