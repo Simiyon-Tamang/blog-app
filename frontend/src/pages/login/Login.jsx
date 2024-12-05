@@ -20,7 +20,7 @@ const Login = () => {
         <form class="flex flex-col gap-3">
           <div class="block relative">
             <label
-              for="email"
+              htmlFor="email"
               class="block text-gray-600 cursor-text text-sm leading-[140%] font-normal mb-2"
             >
               Email
@@ -33,7 +33,7 @@ const Login = () => {
           </div>
           <div class="block relative">
             <label
-              for="password"
+              htmlFor="password"
               class="block text-gray-600 cursor-text text-sm leading-[140%] font-normal mb-2"
             >
               Password
