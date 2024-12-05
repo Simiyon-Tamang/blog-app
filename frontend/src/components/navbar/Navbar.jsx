@@ -2,8 +2,10 @@ import React from "react";
 import Image from "../image/image";
 import { Link } from "react-router-dom";
 import Home from "../../pages/home/Home";
+import useLogout from "../../hooks/useLogout";
 
 const Navbar = () => {
+  const { logout } = useLogout();
   return (
     <div className="navbar bg-base-100">
       <Link to="/" className="flex-1">
@@ -38,16 +40,18 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow space-y-1"
           >
             <li>
-              <button>Profile</button>
+              <button className="btn btn-info">Profile</button>
             </li>
             <li>
-              <button>Settings</button>
+              <button className="btn btn-info ">Settings</button>
             </li>
             <li>
-              <button>Logout</button>
+              <button className="btn btn-error w-auto " onClick={logout}>
+                Logout
+              </button>
             </li>
           </ul>
         </div>

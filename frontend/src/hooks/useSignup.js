@@ -1,9 +1,10 @@
-import { json } from "express";
 import React from "react";
 import toast from "react-hot-toast";
+import { useAuthContext } from "../context/AuthContext";
 
 const useSignup = () => {
   const [loading, setLoading] = React.useState(false);
+  const { setAuthUser } = useAuthContext();
   const signup = async (inputs) => {
     if (!handleInputErrors(inputs)) {
       setLoading(false);
@@ -21,9 +22,16 @@ const useSignup = () => {
 
       const data = await res.json();
       if (data.error) {
+        console.log(data.error);
+        if (data.error === "Username already exists") {
+          throw new Error(
+            "This username is already taken. Please choose another."
+          );
+        }
         throw new Error(data.error);
       }
-      localStorage.setItem("authUser", json.stringify(data));
+      localStorage.setItem("authUser", JSON.stringify(data));
+      setAuthUser(data);
     } catch (error) {
       toast.error(error.message);
     } finally {

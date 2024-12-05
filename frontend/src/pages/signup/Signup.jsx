@@ -16,10 +16,14 @@ const Signup = () => {
     setInputs({ ...inputs, gender });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    signup(inputs);
-    console.log(inputs);
+    try {
+      await signup(inputs);
+      console.log("Signup data:", inputs); // Log after successful signup
+    } catch (error) {
+      console.error("Signup failed:", error); // Handle errors in signup
+    }
   };
   return (
     /* From Uiverse.io by Yaya12085 */
@@ -29,18 +33,18 @@ const Signup = () => {
         background: "linear-gradient(135deg, #7747ff, #1e0e4b)",
       }}
     >
-      <div class=" relative flex flex-col p-5 rounded-md text-black bg-white w-120 ">
-        <div class="text-4xl font-bold mb-2 text-[#1e0e4b] text-center">
-          Welcome to <span class="text-[#7747ff]">Blog App</span>
+      <div className=" relative flex flex-col p-5 rounded-md text-black bg-white w-120 ">
+        <div className="text-4xl font-bold mb-2 text-[#1e0e4b] text-center">
+          Welcome to <span className="text-[#7747ff]">Blog App</span>
         </div>
-        <div class="text-sm font-normal mb-4 text-center text-[#1e0e4b]">
+        <div className="text-sm font-normal mb-4 text-center text-[#1e0e4b]">
           Signup
         </div>
-        <form class="flex flex-col gap-3" onSubmit={handleSubmit}>
-          <div class="block relative">
+        <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
+          <div className="block relative">
             <label
-              for="fullName"
-              class="block text-gray-600 cursor-text text-sm leading-[140%] font-normal mb-2"
+              htmlFor="fullName"
+              className="block text-gray-600 cursor-text text-sm leading-[140%] font-normal mb-2"
             >
               Full Name
             </label>
@@ -50,13 +54,13 @@ const Signup = () => {
               }
               type="text"
               id="fullName"
-              class="rounded border border-gray-200 text-sm w-full font-normal leading-[18px] text-black tracking-[0px] appearance-none block h-11 m-0 p-[11px] focus:ring-2 ring-offset-2  ring-gray-900 outline-0"
+              className="rounded border border-gray-200 text-sm w-full font-normal leading-[18px] text-black tracking-[0px] appearance-none block h-11 m-0 p-[11px] focus:ring-2 ring-offset-2  ring-gray-900 outline-0"
             />
           </div>
-          <div class="block relative">
+          <div className="block relative">
             <label
-              for="userName"
-              class="block text-gray-600 cursor-text text-sm leading-[140%] font-normal mb-2"
+              htmlFor="userName"
+              className="block text-gray-600 cursor-text text-sm leading-[140%] font-normal mb-2"
             >
               User Name
             </label>
@@ -66,13 +70,13 @@ const Signup = () => {
               }
               type="text"
               id="userName"
-              class="rounded border border-gray-200 text-sm w-full font-normal leading-[18px] text-black tracking-[0px] appearance-none block h-11 m-0 p-[11px] focus:ring-2 ring-offset-2  ring-gray-900 outline-0"
+              className="rounded border border-gray-200 text-sm w-full font-normal leading-[18px] text-black tracking-[0px] appearance-none block h-11 m-0 p-[11px] focus:ring-2 ring-offset-2  ring-gray-900 outline-0"
             />
           </div>
-          <div class="block relative">
+          <div className="block relative">
             <label
-              for="password"
-              class="block text-gray-600 cursor-text text-sm leading-[140%] font-normal mb-2"
+              htmlFor="password"
+              className="block text-gray-600 cursor-text text-sm leading-[140%] font-normal mb-2"
             >
               Password
             </label>
@@ -82,13 +86,13 @@ const Signup = () => {
               }
               type="password"
               id="password"
-              class="rounded border border-gray-200 text-sm w-full font-normal leading-[18px] text-black tracking-[0px] appearance-none block h-11 m-0 p-[11px] focus:ring-2 ring-offset-2 ring-gray-900 outline-0"
+              className="rounded border border-gray-200 text-sm w-full font-normal leading-[18px] text-black tracking-[0px] appearance-none block h-11 m-0 p-[11px] focus:ring-2 ring-offset-2 ring-gray-900 outline-0"
             />
           </div>
-          <div class="block relative">
+          <div className="block relative">
             <label
-              for="password"
-              class="block text-gray-600 cursor-text text-sm leading-[140%] font-normal mb-2"
+              htmlFor="password"
+              className="block text-gray-600 cursor-text text-sm leading-[140%] font-normal mb-2"
             >
               Confirm Password
             </label>
@@ -97,8 +101,8 @@ const Signup = () => {
                 setInputs({ ...inputs, confirmPassword: e.target.value })
               }
               type="password"
-              id="password"
-              class="rounded border border-gray-200 text-sm w-full font-normal leading-[18px] text-black tracking-[0px] appearance-none block h-11 m-0 p-[11px] focus:ring-2 ring-offset-2 ring-gray-900 outline-0"
+              id="confirmPassword"
+              className="rounded border border-gray-200 text-sm w-full font-normal leading-[18px] text-black tracking-[0px] appearance-none block h-11 m-0 p-[11px] focus:ring-2 ring-offset-2 ring-gray-900 outline-0"
             />
           </div>
           <GenderCheckbox
@@ -106,15 +110,16 @@ const Signup = () => {
             selectedGender={inputs.gender}
           />
           <button
+            disabled={loading}
             type="submit"
-            class="bg-[#7747ff] w-max m-auto px-6 py-2 rounded text-white text-sm font-normal"
+            className="bg-[#7747ff] w-max m-auto px-6 py-2 rounded text-white text-sm font-normal"
           >
-            Signup
+            {loading ? "Signing up..." : "Sign Up"}
           </button>
         </form>
-        <div class="text-sm text-center mt-[1.6rem]">
+        <div className="text-sm text-center mt-[1.6rem]">
           Already have an account?{" "}
-          <Link to="/login" class="text-sm text-[#7747ff]" href="#">
+          <Link to="/login" className="text-sm text-[#7747ff]" href="#">
             Sign in
           </Link>
         </div>
