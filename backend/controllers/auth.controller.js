@@ -60,9 +60,14 @@ export const login = async (req, res) => {
       return res.status(400).json({ message: "All fields are required" });
     }
     const user = await User.findOne({ userName });
+    const isPasswordCorrect = await bycrypt.compare(password, user.password);
+    if (!isPasswordCorrect) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+
     generateTokenAndSetCookie(user._id, res);
 
-    res.status(200).json({
+    res.status(201).json({
       _id: user._id,
       fullName: user.fullName,
       userName: user.userName,
