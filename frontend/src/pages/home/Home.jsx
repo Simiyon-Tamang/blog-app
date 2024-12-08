@@ -1,5 +1,5 @@
 import React from "react";
-import PostContainer from "../../components/postContainer/PostContainer";
+import PostContainer from "../../components/post/PostContainer";
 import Navbar from "../../components/navbar/Navbar";
 
 const Home = () => {
