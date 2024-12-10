@@ -8,7 +8,7 @@ const useFetchPosts = () => {
   const fetchPosts = async () => {
     try {
       setLoading(true);
-      const response = await fetch("/api/posts"); // Replace with your actual API endpoint
+      const response = await fetch("api/auth/posts");
       if (!response.ok) {
         throw new Error(`HTTP Error: ${response.status}`);
       }
