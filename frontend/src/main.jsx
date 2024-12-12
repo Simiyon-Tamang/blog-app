@@ -6,6 +6,7 @@ import "./index.css";
 import { AuthContextProvider } from "./context/AuthContext.jsx";
 import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
+import Post from "./components/post/Post.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
