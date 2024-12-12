@@ -1,9 +1,11 @@
 import React from "react";
 import { formatDateTime } from "../../utils/formatDateTime";
+import { useNavigate } from "react-router-dom";
+import { usePostStore } from "../../zustand/usePostStore";
 
 const Posts = ({ posts }) => {
-  const formattedTime = formatDateTime(posts.createdAt);
-
+  const navigate = useNavigate();
+  const setSelectedPost = usePostStore((state) => state.setSelectedPost);
   return (
     <div>
       {posts.map((post) => {
@@ -40,6 +42,11 @@ const Posts = ({ posts }) => {
                 </p>
               </div>
               <button
+                onClick={() => {
+                  console.log(formattedTime);
+                  setSelectedPost(post);
+                  navigate(`/posts/${post.id}`);
+                }}
                 type="button"
                 className="h-10 w-[120px] bg-[#261a6be8] text-white rounded-3xl tracking-wide absolute right-10 bottom-7 cursor-pointer hover:bg-[#4938b6e8]"
               >

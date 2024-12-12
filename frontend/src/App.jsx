@@ -1,10 +1,10 @@
 import "./App.css";
 import Home from "./pages/home/Home";
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
+
 import {
   createBrowserRouter,
   Navigate,
+  useNavigate,
   Route,
   RouterProvider,
   Routes,
@@ -13,6 +13,7 @@ import {
 import "./index.css";
 import Login from "./pages/login/Login";
 import SignUp from "./pages/signup/Signup.jsx";
+import SinglePostPage from "./pages/posts/SinglePostPage.jsx";
 
 import { useAuthContext } from "./context/AuthContext.jsx";
 
@@ -36,6 +37,7 @@ function App() {
           element={authUser ? <Navigate to="/" /> : <SignUp />}
         />
         <Route path="/" />
+        <Route path="/posts/:id" element={<SinglePostPage />} />
       </Routes>
       <Toaster />
     </div>
