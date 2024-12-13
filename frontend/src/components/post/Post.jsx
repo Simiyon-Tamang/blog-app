@@ -1,7 +1,10 @@
 import React from "react";
 import Image from "../image/image";
 
+import { formatDateTime } from "../../utils/formatDateTime";
+
 const Post = ({ post }) => {
+  const formattedDateTime = formatDateTime(post.createdAt);
   return (
     <div>
       <div className="container max-w-6xl mx-auto p-6">
@@ -18,7 +21,7 @@ const Post = ({ post }) => {
           <p className="text-gray-700 text-lg mb-6">{post.content}</p>
           <div className="flex justify-between text-sm text-gray-500">
             <span>By: {post.author.fullName}</span>
-            <span></span>
+            <span>{formattedDateTime}</span>
           </div>
         </div>
       </div>
