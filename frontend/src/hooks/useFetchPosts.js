@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 const useFetchPosts = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const { id } = useParams();
   const fetchPosts = async () => {
     try {
       setLoading(true);
@@ -23,7 +24,7 @@ const useFetchPosts = () => {
 
   useEffect(() => {
     fetchPosts();
-  }, []); // Fetch posts on component mount
+  }, [id]); // Fetch posts on component mount
 
   return { posts, loading, error };
 };

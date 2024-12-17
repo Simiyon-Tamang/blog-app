@@ -4,6 +4,9 @@ import Image from "../image/image";
 import { formatDateTime } from "../../utils/formatDateTime";
 
 const Post = ({ post }) => {
+  if (!post) {
+    return <div>Loading...</div>;
+  }
   const formattedDateTime = formatDateTime(post.createdAt);
   return (
     <div>

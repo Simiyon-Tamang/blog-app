@@ -1,9 +1,21 @@
 import React, { useState } from "react";
+import useWriteComment from "../../hooks/useWriteComment";
 
 const CommentInput = () => {
   const [comment, setComment] = useState("");
+  const { loading, writeComment } = useWriteComment();
+
+  const handleSubmit = async () => {
+    e.preventDefault();
+    if (!comment) {
+      return;
+    }
+    await writeComment(comment);
+    setComment("");
+  };
+
   return (
-    <form className="flex items-center justify-center">
+    <form className="flex items-center justify-center" onSubmit={handleSubmit}>
       {/* Parent container with flex to align children side by side */}
       <div className="flex items-center space-x-4">
         <textarea
