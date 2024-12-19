@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { usePostStore } from "../zustand/usePostStore";
+import { useParams } from "react-router-dom";
 
 const useFetchPostById = () => {
+  const { id } = useParams();
   const { selectedPost, setSelectedPost, clearPost } = usePostStore();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -10,7 +12,7 @@ const useFetchPostById = () => {
     const fetchPostById = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`api/auth/posts/${selectedPost.id}`);
+        const response = await fetch(`api/auth/posts/${id}`);
         if (!response.ok) {
           throw new Error(`HTTP Error: ${response.status}`);
         }
@@ -24,11 +26,7 @@ const useFetchPostById = () => {
     };
 
     fetchPostById();
-
-    return () => {
-      clearPost();
-    };
-  }, [selectedPost, setSelectedPost, clearPost]);
+  }, [id, selectedPost, setSelectedPost, clearPost]);
   return { post: selectedPost, loading, error };
 };
 

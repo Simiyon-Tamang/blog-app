@@ -3,14 +3,13 @@ import { persist } from "zustand/middleware";
 
 const usePostStore = create(
   persist(
-    //persist allows to store data in localStorage and rehydrate it on page reload or component mount
-    (set, get) => ({
+    (set) => ({
       selectedPost: null,
-      setSelectedPost: (post) => ({ selectedPost: post }),
-      clearPost: () => set({ selectedPost: null }), // Clear selected post from store after unmount of SinglePostPage component
+      setSelectedPost: (post) => set({ selectedPost: post }),
+      clearPost: () => set({ selectedPost: null }),
     }),
     {
-      name: "post-storage", // Unique key to store data in localStorage
+      name: "post-storage", // Unique key for localStorage
       getStorage: () => localStorage, // Use localStorage as storage
     }
   )
