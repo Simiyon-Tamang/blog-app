@@ -8,11 +8,18 @@ import { usePostStore } from "../../zustand/usePostStore";
 
 const SinglePostPage = () => {
   const selectedPost = usePostStore((state) => state.selectedPost);
+  // console.log("Selected post id: ", selectedPost.id);
   return (
     <div>
       <Navbar />
-      {selectedPost ? <Post post={selectedPost} /> : <div>Loading...</div>}
-      <CommentContainer />
+      {selectedPost ? (
+        <>
+          <Post post={selectedPost} />
+          <CommentContainer postId={selectedPost.id} />
+        </>
+      ) : (
+        <div>Loading...</div>
+      )}
     </div>
   );
 };

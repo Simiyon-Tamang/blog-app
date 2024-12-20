@@ -5,12 +5,13 @@ const CommentInput = () => {
   const [comment, setComment] = useState("");
   const { loading, writeComment } = useWriteComment();
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!comment) {
       return;
     }
     await writeComment(comment);
+    console.log("Comment submitted: ", comment);
     setComment("");
   };
 
