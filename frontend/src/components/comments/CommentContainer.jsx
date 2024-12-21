@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import CommentInput from "./CommentInput";
 
+import { formatDateTime } from "../../utils/formatDateTime";
+
 import useGetComments from "../../hooks/useGetComments";
 
 const CommentContainer = ({ postId }) => {
@@ -44,7 +46,9 @@ const CommentContainer = ({ postId }) => {
                 </h3>
                 <div className="flex justify-between">
                   <p className="text-sm">{comment.content}</p>
-                  <p className="text-xs text-gray-400">{comment.createdAt}</p>
+                  <p className="text-xs text-gray-400">
+                    {formatDateTime(comment.createdAt)}
+                  </p>
                 </div>
               </div>
             </div>
