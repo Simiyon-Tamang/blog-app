@@ -8,12 +8,12 @@ const useWriteComment = () => {
   const writeComment = async (comment) => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/auth/posts/${selectedPost._id}/comments`, {
+      const res = await fetch(`/api/auth/posts/${selectedPost.id}/comments`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ comment }),
+        body: JSON.stringify({ content: comment }),
       });
       const data = await res.json();
       if (data.error) {
