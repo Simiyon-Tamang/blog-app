@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import useWriteComment from "../../hooks/useWriteComment";
+import toast from "react-hot-toast";
 
-const CommentInput = () => {
+const CommentInput = ({ addCommentToState }) => {
   const [comment, setComment] = useState("");
   const { loading, writeComment } = useWriteComment();
 
@@ -11,7 +12,8 @@ const CommentInput = () => {
       return;
     }
     await writeComment(comment);
-    console.log("Comment submitted: ", comment);
+    toast.success("Comment added successfully");
+    addCommentToState(comment);
     setComment("");
   };
 

@@ -24,9 +24,13 @@ const CommentContainer = ({ postId }) => {
     };
     fetchComments();
   }, [postId]);
+
+  const addCommentToState = (newComment) => {
+    setComments((prevComments) => [...prevComments, newComment]);
+  };
   return (
     <div className="flex flex-col my-3 justify-center items-center ">
-      <CommentInput />
+      <CommentInput addCommentToState={addCommentToState} />
       <div className="flex flex-col py-2 items-center justify-center">
         {loading ? (
           <div>Loading comments...</div>
