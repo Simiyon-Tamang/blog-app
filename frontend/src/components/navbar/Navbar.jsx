@@ -18,6 +18,7 @@ const Navbar = () => {
         />
       </Link>
       <div className="flex-none gap-2">
+        <button className="button btn-primary">Add Post</button>
         <div className="form-control">
           <input
             type="text"
