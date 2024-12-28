@@ -14,6 +14,7 @@ import "./index.css";
 import Login from "./pages/login/Login";
 import SignUp from "./pages/signup/Signup.jsx";
 import SinglePostPage from "./pages/posts/SinglePostPage.jsx";
+import WritePost from "./components/post/WritePost.jsx";
 
 import { useAuthContext } from "./context/AuthContext.jsx";
 
@@ -36,7 +37,10 @@ function App() {
           path="/signup"
           element={authUser ? <Navigate to="/" /> : <SignUp />}
         />
-        <Route path="/" />
+        <Route
+          path="/writepost"
+          element={authUser ? <WritePost /> : <Login />}
+        />
         <Route path="/posts/:id" element={<SinglePostPage />} />
       </Routes>
       <Toaster />

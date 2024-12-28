@@ -1,11 +1,16 @@
 import React from "react";
 import Image from "../image/image";
+
 import { Link } from "react-router-dom";
 import Home from "../../pages/home/Home";
 import useLogout from "../../hooks/useLogout";
+import AddPostBtn from "../uiverse/addPostBtn";
+
+import { AuthContext } from "../../context/AuthContext";
 
 const Navbar = () => {
   const { logout } = useLogout();
+  const { authUser } = React.useContext(AuthContext);
   return (
     <div className="navbar bg-base-100">
       <Link to="/" className="flex-1">
@@ -18,7 +23,7 @@ const Navbar = () => {
         />
       </Link>
       <div className="flex-none gap-2">
-        <button className="button btn-primary">Add Post</button>
+        {authUser && <AddPostBtn />}
         <div className="form-control">
           <input
             type="text"
