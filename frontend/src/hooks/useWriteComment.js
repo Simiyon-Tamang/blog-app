@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { usePostStore } from "../zustand/usePostStore";
 import toast from "react-hot-toast";
 const useWriteComment = () => {

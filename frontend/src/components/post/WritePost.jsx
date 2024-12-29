@@ -1,13 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Navbar from "../navbar/Navbar";
 
 import { AuthContext } from "../../context/AuthContext";
-import { use } from "react";
+import useWritePost from "../../hooks/useWritePost";
+import useImageUpload from "../../hooks/useImageUpload";
+import toast from "react-hot-toast";
 
 const WritePost = () => {
   const { authUser } = React.useContext(AuthContext);
+  const { loading, writePost } = useWritePost();
+  const { handleImageUpload } = useImageUpload();
+
+  const [image, setImage] = useState(null); // Store the selected image file
+  const [imageUrl, setImageUrl] = useState("");
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
+
   const username = authUser.userName;
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await writePost(title, body);
+    await handleImageUpload(image, setImageUrl);
+    if (!loading) {
+      setTitle("");
+      setBody("");
+    }
+    toast.success("Post created successfully");
+  };
   return (
     <>
       <Navbar />
@@ -30,12 +56,26 @@ const WritePost = () => {
           </div>
 
           {/* Form */}
-          <form>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              className="block w-full border border-gray-300 rounded-lg mb-2 p-4 text-sm text-gray-700 focus:ring-[#7747FF] focus:border-[#7747FF]"
+              placeholder="Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
             <textarea
               className="block w-full border border-gray-300 rounded-lg p-4 text-sm text-gray-700 focus:ring-[#7747FF] focus:border-[#7747FF] h-96 resize-none"
               placeholder="What's on your mind?"
+              value={body}
+              onChange={(e) => setBody(e.target.value)}
             />
-
+            <input
+              type="file"
+              accept="image/*"
+              className="file-input file-input-bordered w-full mt-3 max-w-xs"
+              onChange={handleFileChange}
+            />
             <button
               type="submit"
               className="mt-6 w-full py-3 rounded-xl bg-[#7747FF] text-white font-semibold hover:bg-[#5a37cc] focus:ring-4 focus:ring-[#a985ff] transition-all"
