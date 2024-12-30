@@ -70,6 +70,7 @@ const WritePost = () => {
               value={body}
               onChange={(e) => setBody(e.target.value)}
             />
+            <h2 className="mt-2">Add photo for your post:</h2>
             <input
               type="file"
               accept="image/*"
