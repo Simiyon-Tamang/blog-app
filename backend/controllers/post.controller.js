@@ -1,5 +1,10 @@
 import Post from "../models/post.model.js";
 
+import ImageKit from "imagekit";
+
+import dotenv from "dotenv";
+dotenv.config();
+
 export const createPost = async (req, res) => {
   try {
     const { title, content } = req.body;
@@ -55,4 +60,14 @@ export const getPosts = async (req, res) => {
     console.log("Error in getPosts controller");
     res.status(500).json({ message: error.message });
   }
+};
+
+const imagekit = new ImageKit({
+  publicKey: process.env.IK_PUBLIC_KEY,
+  privateKey: process.env.IK_PRIVATE_KEY,
+  urlEndpoint: process.env.IK_URL_ENDPOINT,
+});
+export const uploadAuth = async (req, res) => {
+  const result = imagekit.getAuthenticationParameters();
+  res.send(result);
 };

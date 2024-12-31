@@ -6,6 +6,7 @@ import { AuthContext } from "../../context/AuthContext";
 import useWritePost from "../../hooks/useWritePost";
 import useImageUpload from "../../hooks/useImageUpload";
 import toast from "react-hot-toast";
+import { IKContext, IKUpload } from "imagekitio-react";
 
 const WritePost = () => {
   const { authUser } = React.useContext(AuthContext);
@@ -18,6 +19,25 @@ const WritePost = () => {
   const [body, setBody] = useState("");
 
   const username = authUser.userName;
+
+  const authenticator = async () => {
+    try {
+      const response = await fetch("api/auth/posts/upload-auth");
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(
+          `Request failed with status ${response.status}: ${errorText}`
+        );
+      }
+
+      const data = await response.json();
+      const { signature, expire, token } = data;
+      return { signature, expire, token };
+    } catch (error) {
+      throw new Error(`Authentication request failed: ${error.message}`);
+    }
+  };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -71,6 +91,21 @@ const WritePost = () => {
               onChange={(e) => setBody(e.target.value)}
             />
             <h2 className="mt-2">Add photo for your post:</h2>
+            <IKContext
+              publicKey={import.meta.env.IK_PUBLIC_KEY}
+              urlEndpoint={import.meta.env.IK_URL_ENDPOINT}
+              authenticationEndpoint={authenticator}
+            >
+              <IKUpload
+                fileName="image"
+                onError={(error) => {
+                  console.log(error);
+                }}
+                onSuccess={(res) => {
+                  setImageUrl(res.url);
+                }}
+              ></IKUpload>
+            </IKContext>
             <input
               type="file"
               accept="image/*"
