@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
+import ImageKit from "imagekit";
 
 import authRoutes from "./routes/auth.routes.js";
 import postRoutes from "./routes/post.routes.js";
@@ -20,6 +21,12 @@ app.use("/api/auth", authRoutes);
 app.use("/api/auth", postRoutes);
 app.use("/api/auth", commentRoutes);
 
+const imagekit = new ImageKit({
+  publicKey: process.env.IK_PUBLIC_KEY,
+  privateKey: process.env.IK_PRIVATE_KEY,
+  urlEndpoint: process.env.IK_URL_ENDPOINT,
+});
+
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
@@ -29,12 +36,11 @@ app.use(function (req, res, next) {
   next();
 });
 
-{
-  /*console.log("Public Key:", process.env.IK_PUBLIC_KEY);
-console.log("Private Key:", process.env.IK_PRIVATE_KEY);
-console.log("URL Endpoint:", process.env.IK_URL_ENDPOINT);
-*/
-}
+app.get("/auth", function (req, res) {
+  var result = imagekit.getAuthenticationParameters();
+  res.send(result);
+});
+
 app.get("/", (req, res) => {
   res.send("API is running...");
 });
