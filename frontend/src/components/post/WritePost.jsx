@@ -8,26 +8,8 @@ import useImageUpload from "../../hooks/useImageUpload";
 import toast from "react-hot-toast";
 import { IKContext, IKUpload } from "imagekitio-react";
 
+console.log(import.meta.env);
 console.log(import.meta.env.VITE_IK_PUBLIC_KEY);
-
-const authenticator = async () => {
-  try {
-    const response = await fetch("api/auth");
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(
-        `Request failed with status ${response.status}: ${errorText}`
-      );
-    }
-
-    const data = await response.json();
-    const { signature, expire, token } = data;
-    return { signature, expire, token };
-  } catch (error) {
-    throw new Error(`Authentication request failed: ${error.message}`);
-  }
-};
 
 const WritePost = () => {
   const { authUser } = React.useContext(AuthContext);
@@ -40,6 +22,25 @@ const WritePost = () => {
   const [body, setBody] = useState("");
 
   const username = authUser.userName;
+
+  const authenticator = async () => {
+    try {
+      const response = await fetch("http://localhost:5001/auth");
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(
+          `Request failed with status ${response.status}: ${errorText}`
+        );
+      }
+
+      const data = await response.json();
+      const { signature, expire, token } = data;
+      return { signature, expire, token };
+    } catch (error) {
+      throw new Error(`Authentication request failed: ${error.message}`);
+    }
+  };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
