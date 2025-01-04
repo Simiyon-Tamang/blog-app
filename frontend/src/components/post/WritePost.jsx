@@ -4,57 +4,32 @@ import Navbar from "../navbar/Navbar";
 
 import { AuthContext } from "../../context/AuthContext";
 import useWritePost from "../../hooks/useWritePost";
-import useImageUpload from "../../hooks/useImageUpload";
 import toast from "react-hot-toast";
-import { IKContext, IKUpload } from "imagekitio-react";
-
-console.log(import.meta.env);
-console.log(import.meta.env.VITE_IK_PUBLIC_KEY);
+import Upload from "../image/Upload";
 
 const WritePost = () => {
   const { authUser } = React.useContext(AuthContext);
   const { loading, writePost } = useWritePost();
-  const { handleImageUpload } = useImageUpload();
 
   const [image, setImage] = useState(null); // Store the selected image file
+  const [video, setVideo] = useState(null); // Store the selected video file
   const [imageUrl, setImageUrl] = useState("");
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
 
   const username = authUser.userName;
 
-  const authenticator = async () => {
-    try {
-      const response = await fetch("http://localhost:5001/auth");
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(
-          `Request failed with status ${response.status}: ${errorText}`
-        );
-      }
-
-      const data = await response.json();
-      const { signature, expire, token } = data;
-      return { signature, expire, token };
-    } catch (error) {
-      throw new Error(`Authentication request failed: ${error.message}`);
-    }
-  };
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setImage(file);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     await writePost(title, body);
-    await handleImageUpload(image, setImageUrl);
     if (!loading) {
       setTitle("");
       setBody("");
+      setImage(null);
+      setVideo(null);
     }
+    console.log(imageUrl);
     toast.success("Post created successfully");
   };
   return (
@@ -93,28 +68,23 @@ const WritePost = () => {
               value={body}
               onChange={(e) => setBody(e.target.value)}
             />
-            <h2 className="mt-2">Add photo for your post:</h2>
-            <IKContext
-              publicKey="public_U8xuxl5i0wb6D8SbQAJrAvjNnFQ="
-              urlEndpoint="https://ik.imagekit.io/olermup8h"
-              authenticator={authenticator}
-            >
-              <IKUpload
-                fileName="test-upload.png"
-                onError={(error) => {
-                  console.log(error);
-                }}
-                onSuccess={(res) => {
-                  setImageUrl(res.url);
-                }}
-              ></IKUpload>
-            </IKContext>
-            <input
-              type="file"
-              accept="image/*"
-              className="file-input file-input-bordered w-full mt-3 max-w-xs"
-              onChange={handleFileChange}
-            />
+            <h2 className="mt-2">Add photo or video for your post:</h2>
+            <div className="flex items-center space-x-4 mt-2">
+              {imageUrl && (
+                <img
+                  src={imageUrl}
+                  alt="Image Preview"
+                  className="w-24 h-20 object-cover rounded-lg"
+                />
+              )}
+              <Upload type="image" setData={setImage} setUrl={setImageUrl}>
+                🌆
+              </Upload>
+              <Upload type="video" setData={setVideo} setUrl={setImageUrl}>
+                ▶️
+              </Upload>
+            </div>
+
             <button
               type="submit"
               className="mt-6 w-full py-3 rounded-xl bg-[#7747FF] text-white font-semibold hover:bg-[#5a37cc] focus:ring-4 focus:ring-[#a985ff] transition-all"
