@@ -15,12 +15,14 @@ const Posts = ({ posts }) => {
             key={post.id}
             className="h-[180px] w-[max] bg-slate-200 flex rounded-xl m-4 shadow-md"
           >
-            <div className="h-full w-[250px] p-7 text-white bg-[#261a6b] rounded-l-xl">
-              <p className="text-[11px] tracking-widest text-[#cccc]">COURSE</p>
-              <h1 className="text-[25px] pt-5 font-medium tracking-wide leading-[25px]">
+            {post.media && (
+              <div className="h-full w-[250px] p-4 text-white  rounded-l-xl">
+                {/*<h1 className="text-[25px] pt-5 font-medium tracking-wide leading-[25px] max-h-[20px]">
                 {post.title}
-              </h1>
-            </div>
+              </h1>*/}
+                <img src={post.media} className="rounded-lg my-2 w-96 h-30" />
+              </div>
+            )}
 
             <div className="p-7 bg-white w-full rounded-r-xl relative">
               <div className="flex justify-between">
@@ -33,7 +35,7 @@ const Posts = ({ posts }) => {
                   </p>
                 </div>
               </div>
-              <h1 className="text-[28px] pt-2 font-[500] tracking-wide">
+              <h1 className="text-[24px] pt-2 font-[500] tracking-wide">
                 {post.title}
               </h1>
               <div className="flex w-[950px] max-h-12 overflow-hidden">
