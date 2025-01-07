@@ -7,7 +7,7 @@ dotenv.config();
 
 export const createPost = async (req, res) => {
   try {
-    const { title, content } = req.body;
+    const { title, content, media } = req.body;
     const author = req.user._id;
 
     if (!title || !content) {
@@ -20,6 +20,7 @@ export const createPost = async (req, res) => {
       title,
       content,
       author,
+      media,
     });
     await newPost.save();
     res.status(201).json(newPost);
@@ -53,8 +54,8 @@ export const getPosts = async (req, res) => {
         fullName: post.author.fullName,
       },
       createdAt: post.createdAt,
+      media: post.media,
     }));
-    console.log(formattedPosts);
     res.status(200).json(formattedPosts);
   } catch (error) {
     console.log("Error in getPosts controller");

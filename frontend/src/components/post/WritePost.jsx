@@ -14,6 +14,7 @@ const WritePost = () => {
   const [image, setImage] = useState(null); // Store the selected image file
   const [video, setVideo] = useState(null); // Store the selected video file
   const [imageUrl, setImageUrl] = useState("");
+  const [videoUrl, setVideoUrl] = useState("");
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
 
@@ -21,12 +22,13 @@ const WritePost = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const mediaUrl = imageUrl || videoUrl;
 
-    await writePost(title, body);
+    await writePost(title, body, mediaUrl);
     if (!loading) {
       setTitle("");
       setBody("");
-      setImage(null);
+      setImageUrl(null);
       setVideo(null);
     }
     console.log(imageUrl);
@@ -72,7 +74,7 @@ const WritePost = () => {
             <div className="flex items-center space-x-4 mt-2">
               {imageUrl && (
                 <img
-                  src={imageUrl}
+                  src={imageUrl ? imageUrl : ""}
                   alt="Image Preview"
                   className="w-24 h-20 object-cover rounded-lg"
                 />
@@ -80,7 +82,7 @@ const WritePost = () => {
               <Upload type="image" setData={setImage} setUrl={setImageUrl}>
                 🌆
               </Upload>
-              <Upload type="video" setData={setVideo} setUrl={setImageUrl}>
+              <Upload type="video" setData={setVideo} setUrl={setVideoUrl}>
                 ▶️
               </Upload>
             </div>
