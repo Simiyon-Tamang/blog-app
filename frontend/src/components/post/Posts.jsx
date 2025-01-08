@@ -6,8 +6,30 @@ import { usePostStore } from "../../zustand/usePostStore";
 const Posts = ({ posts }) => {
   const navigate = useNavigate();
   const setSelectedPost = usePostStore((state) => state.setSelectedPost);
+  const getLatestPostWithMedia = () => {
+    for (let i = posts.length - 1; i >= 0; i--) {
+      if (posts[i].media) {
+        return posts[i];
+      }
+    }
+    return null; // No posts with media found
+  };
+  const latestPostWithMedia = getLatestPostWithMedia();
   return (
     <div>
+      <div className="flex justify-center items-center">
+        <div>
+          {posts.map((post) => {
+            <div>
+              <h1>{post.title}</h1>
+              <p>{post.content}</p>
+            </div>;
+          })}
+        </div>
+        {latestPostWithMedia && (
+          <img src={latestPostWithMedia.media} className="w-auto h-96" />
+        )}
+      </div>
       {posts.map((post) => {
         const formattedTime = formatDateTime(post.createdAt);
         return (
