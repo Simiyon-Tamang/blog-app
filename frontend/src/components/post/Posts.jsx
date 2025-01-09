@@ -17,18 +17,17 @@ const Posts = ({ posts }) => {
   const latestPostWithMedia = getLatestPostWithMedia();
   return (
     <div>
-      <div className="flex justify-center items-center">
-        <div>
-          {posts.map((post) => {
-            <div>
-              <h1>{post.title}</h1>
-              <p>{post.content}</p>
-            </div>;
-          })}
-        </div>
+      <div className="flex flex-row justify-center space-x-5 items-center">
+        <div className="bg-slate-600 w-full h-96">Div1</div>
+
         {latestPostWithMedia && (
-          <img src={latestPostWithMedia.media} className="w-auto h-96" />
+          <img
+            src={latestPostWithMedia.media}
+            className="w-auto h-96 shadow-lg shadow-blue-300 rounded-xl m-4"
+          />
         )}
+
+        <div className="bg-slate-600 w-full h-96">Div2</div>
       </div>
       {posts.map((post) => {
         const formattedTime = formatDateTime(post.createdAt);
