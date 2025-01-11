@@ -15,10 +15,26 @@ const Posts = ({ posts }) => {
     return null; // No posts with media found
   };
   const latestPostWithMedia = getLatestPostWithMedia();
+
+  const firstThreePost = posts.slice(0, 3);
+  const nextThreePost = posts.slice(3, 6);
   return (
     <div>
       <div className="flex flex-row justify-center space-x-5 items-center">
-        <div className="bg-slate-600 w-full h-96">Div1</div>
+        <div className="bg-slate-600 w-full h-96">
+          Div1
+          {firstThreePost.map((post, index) => {
+            return (
+              <div
+                className="bg-slate-200 flex flex-col justify-center items-center h-32 p-4"
+                key={post.id}
+              >
+                <h1>{post.title}</h1>
+                {index != 2 && <div className="divider"></div>}
+              </div>
+            );
+          })}
+        </div>
 
         {latestPostWithMedia && (
           <img
