@@ -21,15 +21,16 @@ const Posts = ({ posts }) => {
   return (
     <div>
       <div className="flex flex-row justify-center space-x-5 items-center">
-        <div className="bg-slate-600 w-full h-96">
-          Div1
+        <div className="flex flex-col justify-between w-full h-96">
           {firstThreePost.map((post, index) => {
             return (
-              <div
-                className="bg-slate-200 flex flex-col justify-center items-center h-32 p-4"
-                key={post.id}
-              >
-                <h1>{post.title}</h1>
+              <div className="bg-slate-200">
+                <div
+                  className=" flex items-center justify-center m-2 h-20"
+                  key={post.id}
+                >
+                  <h1 className="font-bold text-lg ">{post.title}</h1>
+                </div>
                 {index != 2 && <div className="divider"></div>}
               </div>
             );
@@ -43,15 +44,16 @@ const Posts = ({ posts }) => {
           />
         )}
 
-        <div className="bg-slate-600 w-full h-96">
-          Div1
+        <div className="flex flex-col justify-between w-full h-96">
           {nextThreePost.map((post, index) => {
             return (
-              <div
-                className="bg-slate-200 flex flex-col justify-center items-center h-32 p-4"
-                key={post.id}
-              >
-                <h1>{post.title}</h1>
+              <div>
+                <div
+                  className="bg-slate-200 flex items-center justify-center m-2 h-20"
+                  key={post.id}
+                >
+                  <h1 className="font-bold text-lg">{post.title}</h1>
+                </div>
                 {index != 2 && <div className="divider"></div>}
               </div>
             );
