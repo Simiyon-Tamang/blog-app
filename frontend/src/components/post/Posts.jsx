@@ -2,6 +2,7 @@ import React from "react";
 import { formatDateTime } from "../../utils/formatDateTime";
 import { useNavigate } from "react-router-dom";
 import { usePostStore } from "../../zustand/usePostStore";
+import { set } from "mongoose";
 
 const Posts = ({ posts }) => {
   const navigate = useNavigate();
@@ -14,19 +15,28 @@ const Posts = ({ posts }) => {
     }
     return null; // No posts with media found
   };
+
+  const selectPost = () => {};
+
   const latestPostWithMedia = getLatestPostWithMedia();
 
   const firstThreePost = posts.slice(0, 3);
   const nextThreePost = posts.slice(3, 6);
   return (
-    <div>
+    <div className="my-2">
       <div className="flex flex-row justify-center space-x-5 items-center">
         <div className="flex flex-col justify-between w-full h-96">
           {firstThreePost.map((post, index) => {
             return (
-              <div className="bg-slate-200">
+              <div
+                onClick={() => {
+                  setSelectedPost(post);
+                  navigate(`/posts/${post.id}`);
+                }}
+                className="cursor-pointer "
+              >
                 <div
-                  className=" flex items-center justify-center m-2 h-20"
+                  className=" flex items-center justify-center m-2 h-20 hover:text-blue-400"
                   key={post.id}
                 >
                   <h1 className="font-bold text-lg ">{post.title}</h1>
@@ -40,16 +50,26 @@ const Posts = ({ posts }) => {
         {latestPostWithMedia && (
           <img
             src={latestPostWithMedia.media}
-            className="w-auto h-96 shadow-lg shadow-blue-300 rounded-xl m-4"
+            className="w-auto h-96 shadow-lg shadow-blue-300 rounded-xl m-4 cursor-pointer hover:shadow-xl h-39"
+            onClick={() => {
+              setSelectedPost(latestPostWithMedia);
+              navigate(`/posts/${latestPostWithMedia.id}`);
+            }}
           />
         )}
 
         <div className="flex flex-col justify-between w-full h-96">
           {nextThreePost.map((post, index) => {
             return (
-              <div>
+              <div
+                onClick={() => {
+                  setSelectedPost(post);
+                  navigate(`/posts/${post.id}`);
+                }}
+                className="cursor-pointer"
+              >
                 <div
-                  className="bg-slate-200 flex items-center justify-center m-2 h-20"
+                  className=" flex items-center justify-center m-2 h-20"
                   key={post.id}
                 >
                   <h1 className="font-bold text-lg">{post.title}</h1>
@@ -97,7 +117,6 @@ const Posts = ({ posts }) => {
               </div>
               <button
                 onClick={() => {
-                  console.log(formattedTime);
                   setSelectedPost(post);
                   navigate(`/posts/${post.id}`);
                 }}
