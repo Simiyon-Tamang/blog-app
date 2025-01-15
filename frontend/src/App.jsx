@@ -1,14 +1,7 @@
 import "./App.css";
 import Home from "./pages/home/Home";
 
-import {
-  createBrowserRouter,
-  Navigate,
-  useNavigate,
-  Route,
-  RouterProvider,
-  Routes,
-} from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import "./index.css";
 import Login from "./pages/login/Login";

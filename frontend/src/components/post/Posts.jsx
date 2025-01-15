@@ -69,7 +69,7 @@ const Posts = ({ posts }) => {
                 className="cursor-pointer"
               >
                 <div
-                  className=" flex items-center justify-center m-2 h-20"
+                  className=" flex items-center justify-center m-2 h-20 hover:text-blue-400"
                   key={post.id}
                 >
                   <h1 className="font-bold text-lg">{post.title}</h1>
